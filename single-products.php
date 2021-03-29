@@ -21,6 +21,7 @@ $product_image_4 = get_field('product_image_4');
 $product_image_5 = get_field('product_image_5');
 $product_price = get_field('product_price');
 $product_subtitle = get_field('product_subtitle');
+$product_quantity = get_field('product_quantity');
 
 if ($product_available) {
 	$product_link = get_field('product_link');
@@ -50,7 +51,7 @@ $product_description_short = get_field('product_description_short');
 					<div class="product-image-gallery-item" style="background-image:url(<?php echo $product_image_2 ?>)"></div>
 				<?php 
 				} else {
-					echo 'no img';
+					echo '';
 				}
 				?>
 				<?php if($product_image_3){
@@ -58,7 +59,7 @@ $product_description_short = get_field('product_description_short');
 					<div class="product-image-gallery-item" style="background-image:url(<?php echo $product_image_3 ?>)"></div>
 				<?php 
 				} else {
-					echo 'no img';
+					echo '';
 				}
 				?>
 				<?php if($product_image_4){
@@ -66,7 +67,7 @@ $product_description_short = get_field('product_description_short');
 					<div class="product-image-gallery-item" style="background-image:url(<?php echo $product_image_4 ?>)"></div>
 				<?php 
 				} else {
-					echo 'no img';
+					echo '';
 				}
 				?>
 				<?php if($product_image_5){
@@ -74,7 +75,7 @@ $product_description_short = get_field('product_description_short');
 					<div class="product-image-gallery-item" style="background-image:url(<?php echo $product_image_5 ?>)"></div>
 				<?php 
 				} else {
-					echo 'no img';
+					echo '';
 				}
 				?>
 			</div>
@@ -132,19 +133,44 @@ $product_description_short = get_field('product_description_short');
 					'post_type' => 'products',
 					'meta_key'		=> 'product_category',
 					'meta_value'	=> $product_category,
-					'posts_per_page' => 10,
+					'posts_per_page' => 4,
 					'orderby'   => 'rand',
 					'order' => 'ASC'
 					));
 					while ( $loop->have_posts() ) : $loop->the_post();
 
+					$product_price = get_field('product_price');
+					$product_quantity = get_field('product_quantity');
 				?>
 						<div class="related-product wow fadeInUp">
 							<a href="<?php echo the_permalink(); ?>">
 								<div class="image" style="background-image: url('<?php echo get_the_post_thumbnail_url(); ?>')"></div>
-								<h4><?php echo the_title() ?></h4>
-								Description
+								<div class="content">
+									<h4><?php echo the_title() ?></h4>
+									<div class="description-info">
+										<p>Ave Quantity</p>
+										<p>
+										<?php 
+											if($product_quantity > 1) {
+												echo "($product_quantity)";
+											}
+											else {
+												echo '(5)';
+											}
+										?>
+										</p>
+									</div>
+									<div class="description-info">
+										<p>Price:</p>
+										<p>$<?php echo $product_price ?></p>
+									</div>
+								</div>
 							</a>
+							<div class="buy-now-button">
+								<a href="#">
+									Buy Now
+								</a>
+							</div>
 						</div>
 						<?php endwhile; wp_reset_query(); ?>
 				</div>
